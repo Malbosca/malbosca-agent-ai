@@ -1,4 +1,5 @@
 import { getServiceSupabase } from './supabase'
+import { generateRecipeImage } from './imagegen'
 import Anthropic from '@anthropic-ai/sdk'
 
 const anthropic = new Anthropic({
@@ -110,6 +111,10 @@ export async function generateSocialContent(
 ) {
   const contents = []
 
+  // Genera immagine con DALL-E
+console.log(`🎨 Generating image for: ${recipeName}`)
+const imageUrl = await generateRecipeImage(recipeName, ingredients, description)
+
   // Instagram Post
   const instagramPost = await generateInstagramPost(recipeName, ingredients, description)
   contents.push({
@@ -117,7 +122,7 @@ export async function generateSocialContent(
     recipe_name: recipeName,
     social_platform: 'instagram',
     content_type: 'post',
-    generated_content: instagramPost
+    generated_content: { ...instagramPost, image_url: imageUrl }
   })
 
   // Instagram Reel Script
@@ -127,7 +132,7 @@ export async function generateSocialContent(
     recipe_name: recipeName,
     social_platform: 'instagram',
     content_type: 'reel',
-    generated_content: reelScript
+    generated_content: { ...instagramPost, image_url: imageUrl }
   })
 
   // Facebook Post
@@ -137,7 +142,7 @@ export async function generateSocialContent(
     recipe_name: recipeName,
     social_platform: 'facebook',
     content_type: 'post',
-    generated_content: facebookPost
+    generated_content: { ...instagramPost, image_url: imageUrl }
   })
 
   // Salva nella coda
