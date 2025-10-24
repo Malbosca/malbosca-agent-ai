@@ -154,6 +154,20 @@ export default function Dashboard() {
                     </span>
                   </div>
 
+                  {/* 🆕 AI GENERATED IMAGE */}
+                  {item.generated_content?.image_url && (
+                    <div className="mb-4">
+                      <img 
+                        src={item.generated_content.image_url} 
+                        alt={item.recipe_name}
+                        className="w-full h-80 object-cover rounded-lg shadow-md"
+                      />
+                      <p className="text-xs text-gray-500 mt-2 text-center">
+                        🎨 Immagine generata con AI
+                      </p>
+                    </div>
+                  )}
+
                   {/* Content Preview */}
                   <div className="bg-gray-50 rounded-lg p-4 mb-4">
                     <h4 className="font-semibold text-sm text-gray-700 mb-2">
