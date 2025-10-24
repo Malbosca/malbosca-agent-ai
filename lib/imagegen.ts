@@ -23,7 +23,7 @@ export async function generateRecipeImage(
       style: 'natural'
     })
 
-    const imageUrl = response.data[0].url
+    const imageUrl = response.data?.[0]?.url
     console.log(`✅ Image generated: ${imageUrl}`)
 
     return imageUrl || ''
