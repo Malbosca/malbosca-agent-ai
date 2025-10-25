@@ -37,7 +37,14 @@ export interface ContentQueue {
   recipe_name: string
   social_platform: 'instagram' | 'facebook' | 'tiktok' | 'x'
   content_type: 'post' | 'reel' | 'story' | 'thread'
-  generated_content: any
+  generated_content: {
+    caption?: string
+    hashtags?: string[]
+    hook?: string
+    steps?: string[]
+    image_url?: string
+    [key: string]: any
+  }
   status: 'pending' | 'approved' | 'rejected' | 'published'
   scheduled_date: string | null
   created_at: string
