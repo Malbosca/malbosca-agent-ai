@@ -284,5 +284,10 @@ export async function runDailyAnalysis() {
   }
 
   console.log('✅ Daily analysis complete!')
-  return trackedRecipes || []
+  return (trackedRecipes || []).map(r => ({
+  recipeName: r.recipe_name,
+  requestCount: r.request_count,
+  ingredients: r.ingredients ? r.ingredients.split(', ') : [],
+  description: r.description || ''
+}))
 }
