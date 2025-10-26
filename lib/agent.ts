@@ -117,33 +117,39 @@ export async function generateSocialContent(
 
   // Instagram Post
   const instagramPost = await generateInstagramPost(recipeName, ingredients, description)
-  contents.push({
-    recipe_id: recipeId,
-    recipe_name: recipeName,
-    social_platform: 'instagram',
-    content_type: 'post',
-    generated_content: { ...instagramPost, image_url: imageUrl }
-  })
+  if (instagramPost) {
+    contents.push({
+      recipe_id: recipeId,
+      recipe_name: recipeName,
+      social_platform: 'instagram',
+      content_type: 'post',
+      generated_content: { ...instagramPost, image_url: imageUrl }
+    })
+  }
 
   // Instagram Reel Script
   const reelScript = await generateReelScript(recipeName, ingredients, description)
-  contents.push({
-    recipe_id: recipeId,
-    recipe_name: recipeName,
-    social_platform: 'instagram',
-    content_type: 'reel',
-    generated_content: { ...reelScript, image_url: imageUrl }
-  })
+  if (reelScript) {
+    contents.push({
+      recipe_id: recipeId,
+      recipe_name: recipeName,
+      social_platform: 'instagram',
+      content_type: 'reel',
+      generated_content: { ...reelScript, image_url: imageUrl }
+    })
+  }
 
   // Facebook Post
   const facebookPost = await generateFacebookPost(recipeName, ingredients, description)
-  contents.push({
-    recipe_id: recipeId,
-    recipe_name: recipeName,
-    social_platform: 'facebook',
-    content_type: 'post',
-    generated_content: { ...facebookPost, image_url: imageUrl }
-  })
+  if (facebookPost) {
+    contents.push({
+      recipe_id: recipeId,
+      recipe_name: recipeName,
+      social_platform: 'facebook',
+      content_type: 'post',
+      generated_content: { ...facebookPost, image_url: imageUrl }
+    })
+  }
 
   // Salva nella coda
   const supabase = getServiceSupabase()
