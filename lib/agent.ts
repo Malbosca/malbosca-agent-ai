@@ -116,43 +116,35 @@ export async function generateSocialContent(
   const imageUrl = await generateRecipeImage(recipeName, ingredients, description)
 
   // Instagram Post
+  // Instagram Post
   const instagramPost = await generateInstagramPost(recipeName, ingredients, description)
-  if (instagramPost) {
-    contents.push({
-      recipe_id: recipeId,
-      recipe_name: recipeName,
-      social_platform: 'instagram',
-      content_type: 'post',
-     // @ts-ignore
-      generated_content: { ...instagramPost, image_url: imageUrl }
-    })
-  }
+  contents.push({
+    recipe_id: recipeId,
+    recipe_name: recipeName,
+    social_platform: 'instagram',
+    content_type: 'post',
+    generated_content: { ...instagramPost, image_url: imageUrl }
+  })
 
   // Instagram Reel Script
   const reelScript = await generateReelScript(recipeName, ingredients, description)
-  if (reelScript) {
-    contents.push({
-      recipe_id: recipeId,
-      recipe_name: recipeName,
-      social_platform: 'instagram',
-      content_type: 'reel',
-      // @ts-ignore
-      generated_content: { ...reelScript, image_url: imageUrl }
-    })
-  }
+  contents.push({
+    recipe_id: recipeId,
+    recipe_name: recipeName,
+    social_platform: 'instagram',
+    content_type: 'reel',
+    generated_content: { ...reelScript, image_url: imageUrl }
+  })
 
   // Facebook Post
   const facebookPost = await generateFacebookPost(recipeName, ingredients, description)
-  if (facebookPost) {
-    contents.push({
-      recipe_id: recipeId,
-      recipe_name: recipeName,
-      social_platform: 'facebook',
-      content_type: 'post',
-      // @ts-ignore
-      generated_content: { ...facebookPost, image_url: imageUrl }
-    })
-  }
+  contents.push({
+    recipe_id: recipeId,
+    recipe_name: recipeName,
+    social_platform: 'facebook',
+    content_type: 'post',
+    generated_content: { ...facebookPost, image_url: imageUrl }
+  })
 
   // Salva nella coda
   const supabase = getServiceSupabase()
@@ -192,8 +184,9 @@ Tono: Naturale, salutista, italiano, entusiasta. Menziona Malbosca come fonte di
       return { caption: textContent.text, hashtags: [], cta: '' }
     }
   }
-  return null
+    return { caption: '', hashtags: [], cta: '' }
 }
+
 
 async function generateReelScript(recipeName: string, ingredients: string[], description: string) {
   const prompt = `Crea uno script per Reel Instagram (30 secondi) per questa ricetta:
@@ -227,7 +220,7 @@ Stile: Veloce, dinamico, visual-first. Perfetto per ricetta rapida e appetitosa.
       return { hook: '', steps: [], outro: '', onScreenText: [], music: '' }
     }
   }
-  return null
+   return { hook: '', steps: [], outro: '', onScreenText: [], music: '' }
 }
 
 async function generateFacebookPost(recipeName: string, ingredients: string[], description: string) {
@@ -261,7 +254,7 @@ Tono: Caldo, familiare, educational. Racconta la storia della ricetta, i benefic
       return { title: '', body: textContent.text, cta: '', tags: [] }
     }
   }
-  return null
+  return { title: '', body: '', cta: '', tags: [] }
 }
 
 /**
