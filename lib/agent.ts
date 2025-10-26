@@ -123,7 +123,7 @@ export async function generateSocialContent(
       recipe_name: recipeName,
       social_platform: 'instagram',
       content_type: 'post',
-      generated_content: { ...instagramPost, image_url: imageUrl }
+      generated_content: { ...(instagramPost || {}), image_url: imageUrl }
     })
   }
 
@@ -135,7 +135,7 @@ export async function generateSocialContent(
       recipe_name: recipeName,
       social_platform: 'instagram',
       content_type: 'reel',
-      generated_content: { ...reelScript, image_url: imageUrl }
+      generated_content: { ...(reelScript || {}), image_url: imageUrl }
     })
   }
 
@@ -147,14 +147,15 @@ export async function generateSocialContent(
       recipe_name: recipeName,
       social_platform: 'facebook',
       content_type: 'post',
-      generated_content: { ...facebookPost, image_url: imageUrl }
+      generated_content: { ...(facebookPost || {}), image_url: imageUrl }
     })
   }
 
   // Salva nella coda
   const supabase = getServiceSupabase()
+  if (contents.length > 0) {
   await supabase.from('content_queue').insert(contents)
-
+}
   return contents
 }
 
