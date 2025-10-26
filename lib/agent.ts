@@ -242,53 +242,47 @@ Tono: Caldo, familiare, educational. Racconta la storia della ricetta, i benefic
     max_tokens: 1200,
     messages: [{ role: 'user', content: prompt }]
   })
-
-  const textContent = response.content.find(block => block.type === 'text')
-  if (textContent && 'text' in textContent) {
-    try {
-      return JSON.parse(textContent.text)
-    } catch {
-      return { title: '', body: textContent.text, cta: '', tags: [] }
-    }
   }
-  return null
-}
 
-/**
+  /**
  * Funzione principale da eseguire quotidianamente (cron job)
  */
+
 export async function runDailyAnalysis() {
   console.log('🤖 Starting daily analysis...')
   
-  // 1. Analizza conversazioni ultime 24h
-  const recipes = await analyzeRecentConversations(24)
-  console.log(`📊 Found ${recipes.length} recipes`)
+  // 1. Analizza conversazioni ultime 24h e aggiorna tracking
+  await analyzeRecentConversations(24)
 
-  // 2. Per ricette con 3+ richieste, genera contenuti
+  // 2. Leggi TUTTE le ricette dal tracking con count >= 1
   const supabase = getServiceSupabase()
-  
-  for (const recipe of recipes) {
-    if (recipe.requestCount >= 1) {
-      console.log(`✨ Generating content for: ${recipe.recipeName} (${recipe.requestCount} requests)`)
-      
-      // Ottieni ID ricetta dal tracking
-      const { data: trackingData } = await supabase
-        .from('recipes_tracking')
-        .select('id')
-        .eq('recipe_name', recipe.recipeName)
-        .single()
+  const { data: trackedRecipes, error } = await supabase
+    .from('recipes_tracking')
+    .select('*')
+    .gte('request_count', 1)
+    .order('request_count', { ascending: false })
 
-      if (trackingData) {
-        await generateSocialContent(
-          recipe.recipeName,
-          recipe.ingredients,
-          recipe.description,
-          trackingData.id
-        )
-      }
-    }
+  if (error) {
+    console.error('Error fetching tracked recipes:', error)
+    return []
+  }
+
+  console.log(`📊 Found ${trackedRecipes?.length || 0} recipes with enough requests`)
+
+  // 3. Genera contenuti per ogni ricetta
+  for (const recipe of trackedRecipes || []) {
+    console.log(`✨ Generating content for: ${recipe.recipe_name} (${recipe.request_count} requests)`)
+    
+    const ingredients = recipe.ingredients ? recipe.ingredients.split(', ') : []
+    
+    await generateSocialContent(
+      recipe.recipe_name,
+      ingredients,
+      recipe.description || '',
+      recipe.id
+    )
   }
 
   console.log('✅ Daily analysis complete!')
-  return recipes
+  return trackedRecipes || []
 }
