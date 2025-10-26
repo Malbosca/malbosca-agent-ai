@@ -179,7 +179,7 @@ export default function Dashboard() {
                           <p className="font-medium">Caption:</p>
                           <p className="whitespace-pre-wrap">
                             {item.generated_content?.caption?.substring(0, 200)}
-                            {item.generated_content?.caption?.length > 200 ? '...' : ''}
+                            {item.generated_content?.caption && item.generated_content.caption.length > 200 ? '...' : ''}
                           </p>
                           {item.generated_content?.hashtags && (
                             <p className="text-blue-600">
