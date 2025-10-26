@@ -112,8 +112,8 @@ export async function generateSocialContent(
   const contents = []
 
   // Genera immagine con DALL-E
-console.log(`🎨 Generating image for: ${recipeName}`)
-const imageUrl = await generateRecipeImage(recipeName, ingredients, description)
+  console.log(`🎨 Generating image for: ${recipeName}`)
+  const imageUrl = await generateRecipeImage(recipeName, ingredients, description)
 
   // Instagram Post
   const instagramPost = await generateInstagramPost(recipeName, ingredients, description)
@@ -132,7 +132,7 @@ const imageUrl = await generateRecipeImage(recipeName, ingredients, description)
     recipe_name: recipeName,
     social_platform: 'instagram',
     content_type: 'reel',
-    generated_content: { ...instagramPost, image_url: imageUrl }
+    generated_content: { ...reelScript, image_url: imageUrl }
   })
 
   // Facebook Post
@@ -142,7 +142,7 @@ const imageUrl = await generateRecipeImage(recipeName, ingredients, description)
     recipe_name: recipeName,
     social_platform: 'facebook',
     content_type: 'post',
-    generated_content: { ...instagramPost, image_url: imageUrl }
+    generated_content: { ...facebookPost, image_url: imageUrl }
   })
 
   // Salva nella coda
@@ -242,12 +242,21 @@ Tono: Caldo, familiare, educational. Racconta la storia della ricetta, i benefic
     max_tokens: 1200,
     messages: [{ role: 'user', content: prompt }]
   })
-  }
 
-  /**
+  const textContent = response.content.find(block => block.type === 'text')
+  if (textContent && 'text' in textContent) {
+    try {
+      return JSON.parse(textContent.text)
+    } catch {
+      return { title: '', body: textContent.text, cta: '', tags: [] }
+    }
+  }
+  return null
+}
+
+/**
  * Funzione principale da eseguire quotidianamente (cron job)
  */
-
 export async function runDailyAnalysis() {
   console.log('🤖 Starting daily analysis...')
   
@@ -285,9 +294,9 @@ export async function runDailyAnalysis() {
 
   console.log('✅ Daily analysis complete!')
   return (trackedRecipes || []).map(r => ({
-  recipeName: r.recipe_name,
-  requestCount: r.request_count,
-  ingredients: r.ingredients ? r.ingredients.split(', ') : [],
-  description: r.description || ''
-}))
+    recipeName: r.recipe_name,
+    requestCount: r.request_count,
+    ingredients: r.ingredients ? r.ingredients.split(', ') : [],
+    description: r.description || ''
+  }))
 }
