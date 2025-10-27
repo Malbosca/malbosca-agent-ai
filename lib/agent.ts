@@ -109,13 +109,12 @@ export async function generateSocialContent(
   description: string,
   recipeId: string
 ) {
-  const contents = []
+  const contents: any[] = []
 
   // Genera immagine con DALL-E
   console.log(`🎨 Generating image for: ${recipeName}`)
   const imageUrl = await generateRecipeImage(recipeName, ingredients, description)
 
-  // Instagram Post
   // Instagram Post
   const instagramPost = await generateInstagramPost(recipeName, ingredients, description)
   contents.push({
