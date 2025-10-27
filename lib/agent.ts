@@ -153,7 +153,7 @@ export async function generateSocialContent(
   return contents
 }
 
-async function generateInstagramPost(recipeName: string, ingredients: string[], description: string) {
+async function generateInstagramPost(recipeName: string, ingredients: string[], description: string): Promise<any> {
   const prompt = `Crea un post Instagram accattivante per questa ricetta bio:
 
 Ricetta: ${recipeName}
@@ -187,7 +187,7 @@ Tono: Naturale, salutista, italiano, entusiasta. Menziona Malbosca come fonte di
 }
 
 
-async function generateReelScript(recipeName: string, ingredients: string[], description: string) {
+async function generateReelScript(recipeName: string, ingredients: string[], description: string): Promise<any> {
   const prompt = `Crea uno script per Reel Instagram (30 secondi) per questa ricetta:
 
 Ricetta: ${recipeName}
@@ -222,7 +222,7 @@ Stile: Veloce, dinamico, visual-first. Perfetto per ricetta rapida e appetitosa.
    return { hook: '', steps: [], outro: '', onScreenText: [], music: '' }
 }
 
-async function generateFacebookPost(recipeName: string, ingredients: string[], description: string) {
+async function generateFacebookPost(recipeName: string, ingredients: string[], description: string): Promise<any> {
   const prompt = `Crea un post Facebook lungo e coinvolgente per questa ricetta bio:
 
 Ricetta: ${recipeName}
