@@ -39,14 +39,12 @@ Il minestrone di verdure biologiche disidratate Malbosca è un'ottima alternativ
 5. Opzionale: aggiungere legumi (fagioli, ceci) o cereali (orzo, farro) a piacimento
 6. Servire caldo con olio extravergine d'oliva crudo, grana o parmigiano grattugiato
 
-**Preparazione Rapida (Metodo Veloce):**
-- Ammollare le verdure in anticipo in acqua calda per 15-20 minuti
-- Questo riduce significativamente il tempo di cottura a circa 20-25 minuti
-- Procedere poi con la cottura normale
+**Preparazione Rapida (Pentola a pressione):**
+- Questo riduce significativamente il tempo di cottura a circa 30 minuti
 
 **Tempi:**
 - Cottura standard: 45-50 minuti
-- Cottura con ammollo preventivo: 20-25 minuti
+- Cottura con pentola a pressione: 30 minuti
 - Preparazione totale (dalla busta al piatto): circa 50 minuti
 
 **Conservazione:**
