@@ -1,9 +1,18 @@
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 import { NextResponse } from 'next/server'
 import { runDailyAnalysis } from '@/lib/agent'
 
-export const maxDuration = 300 // 5 minuti
-
 export async function GET(request: Request) {
+  // Skip durante il build di Netlify
+  if (process.env.NETLIFY === 'true' && !process.env.CONTEXT) {
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Skipped during build' 
+    })
+  }
+
   try {
     console.log('🤖 Starting background analysis...')
     
