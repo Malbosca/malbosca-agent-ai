@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricette Malbosca - Scopri le Nostre Proposte</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Ricette Malbosca</h1>
+            <p class="tagline">Scopri ricette autentiche con i nostri prodotti selezionati</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Filtri -->
+        <section class="filters-section">
+            <h2>Trova la Tua Ricetta Perfetta</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Cerca una ricetta...">
+            </div>
+
+            <div class="filter-categories">
+                <h3>Filtra per Categoria</h3>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="all">Tutte</button>
+                    <button class="filter-btn" data-category="antipasti">Antipasti</button>
+                    <button class="filter-btn" data-category="primi">Primi Piatti</button>
+                    <button class="filter-btn" data-category="secondi">Secondi Piatti</button>
+                    <button class="filter-btn" data-category="contorni">Contorni</button>
+                    <button class="filter-btn" data-category="dolci">Dolci</button>
+                </div>
+            </div>
+
+            <div class="filter-products">
+                <h3>Filtra per Prodotto</h3>
+                <div class="product-tags" id="productTags">
+                    <!-- I prodotti verranno generati dinamicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Griglia Ricette -->
+        <section class="recipes-section">
+            <div class="recipes-header">
+                <h2>Le Nostre Ricette</h2>
+                <p id="recipeCount" class="recipe-count"></p>
+            </div>
+            <div class="recipes-grid" id="recipesGrid">
+                <!-- Le ricette verranno caricate dinamicamente -->
+            </div>
+        </section>
+
+        <!-- Modal Ricetta -->
+        <div id="recipeModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="modalBody">
+                    <!-- Il contenuto della ricetta verrà caricato qui -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Malbosca. Tutti i diritti riservati.</p>
+            <p>Le nostre ricette utilizzano prodotti selezionati di alta qualità</p>
+        </div>
+    </footer>
+
+    <script src="recipes-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
